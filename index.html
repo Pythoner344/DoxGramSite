@@ -4,20 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stony Liutie</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: black;
+        }
+        button {
+            width: 100vw;
+            height: 100vh;
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            background: red;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
 </head>
-<body onload="playSound()">
-    <iframe id="soundFrame" width="110" height="200" 
-        src="https://www.myinstants.com/instant/stony-liutie-31941/embed/" 
-        frameborder="0" scrolling="no">
+<body>
+    <button id="playButton">ЖМИ</button>
+    <iframe id="soundFrame" width="0" height="0" style="border: none;" 
+        src="https://www.myinstants.com/instant/stony-liutie-31941/embed/">
     </iframe>
 
     <script>
+        const button = document.getElementById("playButton");
+        const iframe = document.getElementById("soundFrame");
+
         function playSound() {
-            const iframe = document.getElementById('soundFrame');
-            setTimeout(() => {
+            try {
                 iframe.contentWindow.document.querySelector('button')?.click();
-            }, 1000);
+                button.style.display = "none"; // Убираем кнопку после нажатия
+            } catch (e) {
+                console.error("Ошибка автоматического нажатия, возможно, браузер блокирует.");
+            }
         }
+
+        button.addEventListener("click", playSound);
+        window.onload = () => setTimeout(() => button.click(), 1000); // Автонажатие через 1 сек
     </script>
 </body>
 </html>
